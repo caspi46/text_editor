@@ -1,1 +1,1 @@
-/Users/kyungryunkim/Documents/text_editor/hecto/target/debug/rim: /Users/kyungryunkim/Documents/text_editor/hecto/src/main.rs
+/Users/kyungryunkim/Documents/text_editor/hecto/target/debug/rim: /Users/kyungryunkim/Documents/text_editor/hecto/src/editor/terminal.rs /Users/kyungryunkim/Documents/text_editor/hecto/src/editor.rs /Users/kyungryunkim/Documents/text_editor/hecto/src/main.rs
