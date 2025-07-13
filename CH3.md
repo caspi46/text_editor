@@ -42,3 +42,11 @@ result.unwrap();
 Simply unwrap since nothing we can do to handle this  => no need to do own panicing 
 
 Assignment 1: Tildes 
+
+
+Assignment 2: Improve it 
+
+Ownership 
+- owner-borrower relationship 
+
+Trait
