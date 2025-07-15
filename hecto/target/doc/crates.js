@@ -1,0 +1,2 @@
+window.ALL_CRATES = ["bitflags","cfg_if","convert_case","crossterm","derive_more","derive_more_impl","document_features","errno","libc","litrs","lock_api","log","mio","parking_lot","parking_lot_core","proc_macro2","quote","rim","rustix","scopeguard","signal_hook","signal_hook_mio","signal_hook_registry","smallvec","syn","unicode_ident","unicode_segmentation"];
+//{"start":21,"fragment_lengths":[10,9,15,12,14,19,20,8,7,8,11,6,6,14,19,14,8,6,9,13,14,18,23,11,6,16,23]}
