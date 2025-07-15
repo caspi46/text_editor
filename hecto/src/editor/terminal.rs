@@ -1,20 +1,23 @@
+use core::fmt::Display;
 use crossterm::cursor::{MoveTo, Show, Hide}; 
 use crossterm::style::Print;
-use crossterm::{execute, queue}; 
+use crossterm::{Command, queue}; 
 use crossterm::terminal::{disable_raw_mode, enable_raw_mode, Clear, ClearType};
 use std::io::{stdout, Error, Write};
 use crossterm::terminal::size; 
 
+
+
 #[derive(Copy, Clone)]
 pub struct Size {
-    pub height : u16,
-    pub width : u16,
+    pub height : usize,
+    pub width : usize,
 }
 
 #[derive(Copy, Clone)]
 pub struct Position {
-    pub x : u16,
-    pub y : u16, 
+    pub x : usize,
+    pub y : usize,
 }
 
 pub struct Terminal;
@@ -35,36 +38,40 @@ impl Terminal {
     }
 
     pub fn clear_screen() -> Result<(), std::io::Error> {
-        queue!(stdout(), Clear(ClearType::All))?; 
+        Self::queue_command(Clear(ClearType::All))?; 
         Ok(())
     }
 
     pub fn clear_line() -> Result<(), Error> {
-        queue!(stdout(), Clear(ClearType::CurrentLine))
+        Self::queue_command(Clear(ClearType::CurrentLine))
     }
 
     pub fn move_cursor_to(position: Position) -> Result<(), std::io::Error> {
-        queue!(stdout(), MoveTo(position.x, position.y))?; 
+        #[allow(clippy::as_conversions, clippy::cast_possible_truncation)]
+        Self::queue_command(MoveTo(position.x as u16, position.y as u16))?; 
         Ok(())
     }
 
     pub fn size() -> Result<Size, Error> {
-        let (height, width) = size()?;
+        let (width_u16, height_u16) = size()?;
+        #[allow(clippy::as_conversions)] 
+        let height = height_u16 as usize; 
+        let width = width_u16 as usize;
         Ok(Size {height, width})
     }
 
-    pub fn print(s : &str) -> Result<(), Error> {
-        queue!(stdout(), Print(s))?;
+    pub fn print<T: Display>(s : T) -> Result<(), Error> {
+        Self::queue_command(Print(s))?;
         Ok(())
     }
 
     pub fn show_cursor()-> Result<(), Error> {
-        queue!(stdout(), Show)?;
+        Self::queue_command(Show)?;
         Ok(())
     }
 
     pub fn hide_cursor() -> Result<(), Error> {
-        queue!(stdout(), Hide)?;
+        Self::queue_command(Hide)?;
         Ok(())
     }
 
@@ -73,6 +80,10 @@ impl Terminal {
         Ok(())
     }
     
+    pub fn queue_command<T:Command>(command: T) -> Result<(), Error> {
+        queue!(stdout(), command)?;
+        Ok(())
+    }
 }
 
 
